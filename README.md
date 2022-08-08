@@ -1,6 +1,7 @@
 ## Gitblog
 My personal blog using issues and GitHub Actions (随意转载，无需署名)
 [RSS Feed](https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml)
+## 联系方式
 - Email：[Huaizhi](mailto:yuquanxu0713@gmail.com)
 - Blog：[huaizhixu.github.io](huaizhixu.github.io)
 ## 友情链接
