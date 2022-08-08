@@ -7,6 +7,9 @@ My personal blog using issues and GitHub Actions (随意转载，无需署名)
 | Name | Link | Desc | 
  | ---- | ---- | ---- |
 ## 最近更新
+- [win10开启ping服务 ](https://github.com/huaizhixu/Huaizhi-Blog/issues/2)--2022-08-08
 - [ubuntu环境下的代理工具](https://github.com/huaizhixu/Huaizhi-Blog/issues/1)--2022-08-08
-## documentation
+## bug
+- [win10开启ping服务 ](https://github.com/huaizhixu/Huaizhi-Blog/issues/2)--2022-08-08
+## 技术相关
 - [ubuntu环境下的代理工具](https://github.com/huaizhixu/Huaizhi-Blog/issues/1)--2022-08-08
