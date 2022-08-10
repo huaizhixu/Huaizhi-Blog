@@ -1,5 +1,4 @@
-## Gitblog
-My personal blog using issues and GitHub Actions
+
 ## 联系方式
 - Email：[Huaizhi](mailto:yuquanxu0713@gmail.com)
 - Blog：[huaizhixu.github.io](huaizhixu.github.io)
