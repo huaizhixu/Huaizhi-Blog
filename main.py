@@ -9,8 +9,9 @@ from feedgen.feed import FeedGenerator
 from lxml.etree import CDATA
 
 MD_HEAD = """
+
 ## 联系方式
-- Email：[Huaizhi](mailto:yuquanxu0713@gmail.com)
+- Email：[yuquanxu0713@gmail.com](mailto:yuquanxu0713@gmail.com)
 - Blog：[huaizhixu.github.io](huaizhixu.github.io)
 - RSS: [RSS](https://raw.githubusercontent.com/{repo_name}/master/feed.xml)
 """
