@@ -7,12 +7,14 @@
 | Name | Link | Desc | 
  | ---- | ---- | ---- |
 ## 最近更新
+- [记录cp命令的一次问题](https://github.com/huaizhixu/Huaizhi-Blog/issues/4)--2022-08-11
 - [git commit 代码提交规范](https://github.com/huaizhixu/Huaizhi-Blog/issues/3)--2022-08-09
 - [win10开启ping服务 ](https://github.com/huaizhixu/Huaizhi-Blog/issues/2)--2022-08-08
 - [ubuntu环境下的代理工具](https://github.com/huaizhixu/Huaizhi-Blog/issues/1)--2022-08-08
 ## bug
 - [win10开启ping服务 ](https://github.com/huaizhixu/Huaizhi-Blog/issues/2)--2022-08-08
 ## 技术相关
+- [记录cp命令的一次问题](https://github.com/huaizhixu/Huaizhi-Blog/issues/4)--2022-08-11
 - [ubuntu环境下的代理工具](https://github.com/huaizhixu/Huaizhi-Blog/issues/1)--2022-08-08
 ## 笔记
 - [git commit 代码提交规范](https://github.com/huaizhixu/Huaizhi-Blog/issues/3)--2022-08-09
