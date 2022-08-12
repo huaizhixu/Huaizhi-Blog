@@ -8,7 +8,7 @@ apt-get install python-pip
 pip install git+https://github.com/shadowsocks/shadowsocks.git@master
 ```
 ## 2、配置
-首先对配置文件进行配置：
+首先对配置文件进行配置如下：
 ```
 vim /etc/shadowsocks/shadowsocks.json
 ```
@@ -34,6 +34,7 @@ sslocal -c /etc/shadowsocks/shadowsocks.json
 ## 3、检查shadowsock客户端是否安装正常：
 ```
 curl --socks5 127.0.0.1:1080 http://httpbin.org/ip
+proxychains4 curl www.httpbin.org/ip
 
 ```
 ## proxychains4配置使用
