@@ -7,4 +7,15 @@ git add .                           (添加提交内容)
 git commit --amend        (追加到上次提交)#会通过core.editor指定的编辑器进行编辑
 git commit --amend --no-edit      #不打开命令行，直接提交
 ```
-## 其它使用
+## 将Git默认编辑器更改为vim
+查看Git逻辑变量
+```
+git var -l
+将当前Git默认编辑器更改为vim
+$ git config core.editor vim
+将全局Git默认编辑器更改为vim
+$ git config --global core.editor vim
+
+
+```
+
