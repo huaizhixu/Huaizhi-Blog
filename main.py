@@ -13,7 +13,7 @@ MD_HEAD = """
 ## 联系方式
 - Email：[yuquanxu0713@gmail.com](mailto:yuquanxu0713@gmail.com)
 - Blog：[huaizhixu.github.io](huaizhixu.github.io)
-- RSS: [RSS](https://raw.githubusercontent.com/{repo_name}/master/feed.xml)
+- RSS：[RSS Feed](https://raw.githubusercontent.com/{repo_name}/master/feed.xml)
 """
 
 BACKUP_DIR = "BACKUP"
