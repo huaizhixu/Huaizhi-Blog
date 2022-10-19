@@ -2,7 +2,7 @@
 
 ubuntu 从 17.10 开始，已放弃在 /etc/network/interfaces 里固定 IP 的配置，interfaces 文件不复存在，即使配置也不会生效，而是改成 netplan 方式 ，配置写在 /etc/netplan/01-netcfg.yaml 或者类似名称的 yaml 文件里。
 ```
-sudo vim /etc/netplan/00-installer-config.yaml
+sudo vim /etc/netplan/01-installer-config.yaml
 
 ```
 ```

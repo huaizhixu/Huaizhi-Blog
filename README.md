@@ -3,7 +3,7 @@
 ## 联系方式
 - Email：[yuquanxu0713@gmail.com](mailto:yuquanxu0713@gmail.com)
 - Blog：[huaizhixu.github.io](huaizhixu.github.io)
-- RSS: [RSS](https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml)
+- RSS：[RSS Feed](https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml)
 ## 友情链接
 | Name | Link | Desc | 
  | ---- | ---- | ---- |
