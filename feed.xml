@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/huaizhixu/Huaizhi-Blog</id><title>RSS feed of huaizhixu's Huaizhi-Blog</title><updated>2022-10-19T07:00:12.215101+00:00</updated><author><name>huaizhixu</name><email>yuquanxu0713@gmail.com</email></author><link href="https://github.com/huaizhixu/Huaizhi-Blog"/><link href="https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/7</id><title>ubuntu20.04设置固定ip</title><updated>2022-10-19T07:00:12.384227+00:00</updated><content type="html"><![CDATA[<p>ubuntu 从 17.10 开始，已放弃在 /etc/network/interfaces 里固定 IP 的配置，interfaces 文件不复存在，即使配置也不会生效，而是改成 netplan 方式 ，配置写在 /etc/netplan/01-netcfg.yaml 或者类似名称的 yaml 文件里。</p>
+<pre><code>sudo vim /etc/netplan/01-installer-config.yaml
+
+</code></pre>
+<pre><code>network:
+  ethernets:
+    ens160:     #配置的网卡的名称
+      addresses: [192.168.0.105/24]    #配置的静态ip地址和掩码
+      dhcp4: no    #关闭DHCP，如果需要打开DHCP则写yes
+      optional: true
+      gateway4: 192.168.0.1    #网关地址
+      nameservers:
+         addresses: [114.114.114.114,180.76.76.76]    #DNS服务器地址，多个DNS服务器地址需要用英文逗号分隔开
+  version: 2
+  renderer: networkd    #指定后端采用systemd-networkd或者Network Manager，可不填写则默认使用systemd-workd
+</code></pre>
+<h2>生效配置&amp;查看状态</h2>
+<pre><code>sudo netplan apply
+networkctl status 
+</code></pre>
+<h2>测试</h2>
+<p>先 ping 内网的网关，确认内网是否通</p>
+<pre><code>ping 192.168.1.1
+</code></pre>
+<p>再 ping 一下外网的 IP ，确认是否可以访问外网。</p>
+<pre><code>ping 114.114.114.114
+</code></pre>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/7" rel="alternate"/><category term="笔记"/><published>2022-09-29T09:25:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/6</id><title>terminator快捷键</title><updated>2022-10-19T07:00:12.475342+00:00</updated><content type="html"><![CDATA[<pre><code>//第一部份：关于在同一个标签内的操作
+Alt+Up                          //移动到上面的终端
+Alt+Down                        //移动到下面的终端
+Alt+Left                        //移动到左边的终端
+Alt+Right                       //移动到右边的终端
+Ctrl+Shift+O                    //水平分割终端
+Ctrl+Shift+E                    //垂直分割终端
+Ctrl+Shift+Right                //在垂直分割的终端中将分割条向右移动
+Ctrl+Shift+Left                 //在垂直分割的终端中将分割条向左移动
+Ctrl+Shift+Up                   //在水平分割的终端中将分割条向上移动
+Ctrl+Shift+Down                 //在水平分割的终端中将分割条向下移动
+Ctrl+Shift+S                    //隐藏/显示滚动条
+Ctrl+Shift+F                    //搜索
+Ctrl+Shift+C                    //复制选中的内容到剪贴板
+Ctrl+Shift+V                    //粘贴剪贴板的内容到此处
+Ctrl+Shift+W                    //关闭当前终端
+Ctrl+Shift+Q                    //退出当前窗口，当前窗口的所有终端都将被关闭
+Ctrl+Shift+X                    //最大化显示当前终端
+Ctrl+Shift+Z                    //最大化显示当前终端并使字体放大
+Ctrl+Shift+N or Ctrl+Tab        //移动到下一个终端
+Ctrl+Shift+P or Ctrl+Shift+Tab  //Crtl+Shift+Tab 移动到之前的一个终端
+ 
+//第二部份：有关各个标签之间的操作
+F11                             //全屏开关
+Ctrl+Shift+T                    //打开一个新的标签
+Ctrl+PageDown                   //移动到下一个标签
+Ctrl+PageUp                     //移动到上一个标签
+Ctrl+Shift+PageDown             //将当前标签与其后一个标签交换位置
+Ctrl+Shift+PageUp               //将当前标签与其前一个标签交换位置
+Ctrl+Plus (+)                   //增大字体
+Ctrl+Minus (-)                  //减小字体
+Ctrl+Zero (0)                   //恢复字体到原始大小
+Ctrl+Shift+R                    //重置终端状态
+Ctrl+Shift+G                    //重置终端状态并clear屏幕
+Super+g                         //绑定所有的终端，以便向一个输入能够输入到所有的终端
+Super+Shift+G                   //解除绑定
+Super+t                         //绑定当前标签的所有终端，向一个终端输入的内容会自动输入到其他终端
+Super+Shift+T                   //解除绑定
+Ctrl+Shift+I                    //打开一个窗口，新窗口与原来的窗口使用同一个进程
+Super+i                         //打开一个新窗口，新窗口与原来的窗口使用不同的进程
+
+</code></pre>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/6" rel="alternate"/><category term="笔记"/><published>2022-09-28T09:01:59+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/5</id><title>git使用笔记</title><updated>2022-10-19T07:00:12.563544+00:00</updated><content type="html"><![CDATA[<h2>Git本次修改合并到上次提交</h2>
+<p>有时候为了减少提交日志，并且添加的内容是与上次的内容属于同一个提交内容的，为了好维护，会将本次的提交追加到上次的提交中。使用git 命令如下：</p>
+<pre><code>git add .                           (添加提交内容)
+git commit --amend        (追加到上次提交)#会通过core.editor指定的编辑器进行编辑
+git commit --amend --no-edit      #不打开命令行，直接提交
+</code></pre>
+<h2>将Git默认编辑器更改为vim</h2>
+<p>查看Git逻辑变量</p>
+<pre><code>git var -l
+将当前Git默认编辑器更改为vim
+$ git config core.editor vim
+将全局Git默认编辑器更改为vim
+$ git config --global core.editor vim
+
+
+</code></pre>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/5" rel="alternate"/><category term="笔记"/><published>2022-09-08T08:53:39+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/4</id><title>记录cp命令的一次问题</title><updated>2022-10-19T07:00:12.651132+00:00</updated><content type="html"><![CDATA[<h3>问题描述</h3>
+<p>原因是这样的，在执行脚本的过程中，出现了
+<img src="https://user-images.githubusercontent.com/108015790/184080966-55a8803f-3ee9-4d4f-a2da-1ba229705514.png" alt="Snipaste_2022-08-11_13-42-48" />
+所示的错误，定位到的错误是cp -rf  ******的原因，将-r参数去掉之后成功执行程序。</p>
+<h3>原因：</h3>
+<p>在cp的过程中，-r的参数是对目录进行的操作。查阅相关的资料解释如下所示：
+<img src="https://user-images.githubusercontent.com/108015790/184081545-d625a0fc-dd45-4f9c-a9d4-4833abf64b89.png" alt="image" />
+也就是说在对目录操作的情况下才需要加上-r，单纯的文件要简单的进行复制。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/4" rel="alternate"/><category term="技术相关"/><published>2022-08-11T07:10:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/3</id><title>git commit 代码提交规范</title><updated>2022-10-19T07:00:12.735621+00:00</updated><content type="html"><![CDATA[<h5>格式：</h5>
+<pre><code>type(scope) : subject
+
+</code></pre>
+<p>( 1 ) type（必须） : commit 的类别，只允许使用下面几个标识：</p>
+<ul>
+<li>feat : 新功能</li>
+<li>fix : 修复bug</li>
+<li>docs : 文档改变</li>
+<li>style : 代码格式改变</li>
+<li>refactor : 某个已有功能重构</li>
+<li>perf : 性能优化</li>
+<li>test : 增加测试</li>
+<li>build : 改变了build工具 如 grunt换成了 npm</li>
+<li>revert : 撤销上一次的 commit</li>
+<li>chore : 构建过程或辅助工具的变动</li>
+</ul>
+<p>( 2 ) scope（可选） : 用于说明 commit 影响的范围，比如数据层、控制层、视图层等等，视项目不同而不同。</p>
+<p>( 3 ) subject（必须） : commit 的简短描述，不超过50个字符。<br />
+commitizen 是一个撰写合格 Commit message 的工具，<br />
+遵循 Angular 的提交规范。</p>
+<h3>制定适合我们的 git commit 提交规范</h3>
+<h4>格式</h4>
+<p><code>type: description</code></p>
+<h4>1. type 类型</h4>
+<p>type 是 commit 的类别，只允许如下几种标识：</p>
+<ul>
+<li>fix: 修复bug</li>
+<li>add: 新功能</li>
+<li>update: 更新</li>
+<li>style : 代码格式改变</li>
+<li>test: 增加测试代码</li>
+<li>revert: 撤销上一次的commit</li>
+<li>build: 构建工具或构建过程等的变动，如：gulp 换成了 webpack，webpack 升级等</li>
+</ul>
+<h4>2. description</h4>
+<p>description 是对本次提交的简短描述。</p>
+<p>不超过50个字符。</p>
+<p>推荐以动词开头，如： 设置、修改、增加、删减、撤销等</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/3" rel="alternate"/><category term="笔记"/><published>2022-08-09T00:53:38+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/2</id><title>win10开启ping服务 </title><updated>2022-10-19T07:00:12.833205+00:00</updated><content type="html"><![CDATA[<p>在ping服务时候，我ping别的ip可以通，但是别人<strong>ping</strong>我不同，在同一网段下，网上查了一下，说可能是我的某个服务没有开通，很有道理。现在把这个服务开通过程写出来，方便以后避免这样的低级错误。</p>
+<p>控制面板--&gt;Windows防火墙--&gt;高级设置--&gt;入站规则--&gt;文件和打印机共享（回显请求ICMPv4-in），这个服务有两个，一个配置文件是“专用、公用”，一个是“域”，都启用就可以了。
+<img src="https://user-images.githubusercontent.com/108015790/183322355-9efdff37-67ff-436e-b3fa-057730224cda.png" alt="image" />
+如果是别人ping我能通，我ping别人不通，应该是他的入站规则，或者我的出站规则这个服务未启用。
+<img src="https://user-images.githubusercontent.com/108015790/183324191-61bba81e-e475-4e8e-bda7-ef890be0da47.png" alt="image" /></p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/2" rel="alternate"/><category term="bug"/><published>2022-08-08T10:00:14+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/1</id><title>ubuntu环境下的代理工具</title><updated>2022-10-19T07:00:12.920607+00:00</updated><content type="html"><![CDATA[<h2>1、安装</h2>
+<p>安装命令：
+Debian / Ubuntu:</p>
+<pre><code>apt-get install python-pip
+pip install git+https://github.com/shadowsocks/shadowsocks.git@master
+</code></pre>
+<h2>2、配置</h2>
+<p>首先对配置文件进行配置如下：</p>
+<pre><code>vim /etc/shadowsocks/shadowsocks.json
+</code></pre>
+<p>配置文件：</p>
+<pre><code>{ 
+    &quot;server&quot;:&quot;xxx.xxx.xxx.xxx&quot;,
+    &quot;server_port&quot;:xxx,
+    &quot;local_address&quot;: &quot;127.0.0.1&quot;,
+    &quot;local_port&quot;:1080,
+    &quot;password&quot;:&quot;xxx&quot;,
+    &quot;timeout&quot;:600,
+    &quot;method&quot;:&quot;chacha20-ietf-poly1305&quot;,
+    &quot;fast_open&quot;: false,
+    &quot;workers&quot;: 1
+}
+
+</code></pre>
+<p>启动：</p>
+<pre><code>sslocal -c /etc/shadowsocks/shadowsocks.json
+</code></pre>
+<h2>3、检查shadowsock客户端是否安装正常：</h2>
+<pre><code>curl --socks5 127.0.0.1:1080 http://httpbin.org/ip
+proxychains4 curl www.httpbin.org/ip
+
+</code></pre>
+<h2>proxychains4配置使用</h2>
+<pre><code>sudo apt-get install proxychains4
+</code></pre>
+<p>修改配置文件：</p>
+<pre><code>sudo vim /etc/proxychains.conf
+</code></pre>
+<p>在文本最后加上你的代理服务器地址:</p>
+<pre><code>#[proxylist]
+socks5 127.0.0.1 1080
+</code></pre>
+<pre><code>#各配置项用法如下：
+#dynamic_chain：
+#每个连接都将通过链接代理完成
+＃所有代理按列表中显示的顺序链接
+＃至少有一个代理必须在线才能使用
+＃（跳过死的代理）
+#strict_chain：该配置为ProxyChains的默认配置，同dynamic_chain一样，但所有代理必须正常，否则不能正常使用
+#random_chain：该配置项会从ProxyList中随机选择代理IP来运行流量，如果ProxyList中有多个代理IP，在使用proxychains的时候会使用不同的代理访问目标主机，从而使主机端探测流量更加困难。
+</code></pre>
+<h2>ERROR method chacha20-ietf-poly1305 not supported 解决</h2>
+<pre><code>install libsodium -y
+pip install https://github.com/shadowsocks/shadowsocks/archive/master.zip -U
+</code></pre>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/1" rel="alternate"/><category term="技术相关"/><published>2022-08-08T09:11:15+00:00</published></entry></feed>
