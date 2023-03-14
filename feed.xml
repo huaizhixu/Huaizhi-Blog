@@ -1,5 +1,176 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/huaizhixu/Huaizhi-Blog</id><title>RSS feed of huaizhixu's Huaizhi-Blog</title><updated>2023-02-08T02:34:33.897078+00:00</updated><author><name>huaizhixu</name><email>yuquanxu0713@gmail.com</email></author><link href="https://github.com/huaizhixu/Huaizhi-Blog"/><link href="https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/12</id><title>ROS的相关的笔记</title><updated>2023-02-08T02:34:34.197511+00:00</updated><content type="html"><![CDATA[<p>1、相关的<kbd>rostopic </kbd>的操作
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/huaizhixu/Huaizhi-Blog</id><title>RSS feed of huaizhixu's Huaizhi-Blog</title><updated>2023-03-14T09:25:24.768389+00:00</updated><author><name>huaizhixu</name><email>yuquanxu0713@gmail.com</email></author><link href="https://github.com/huaizhixu/Huaizhi-Blog"/><link href="https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/13</id><title>ubuntu下绑定USB设备的串口名称</title><updated>2023-03-14T09:25:25.137902+00:00</updated><content type="html"><![CDATA[<p>在嵌入式开发和其它过程中，往往会出现USB设备的接入。但是对于多个USB设备接入时，由于操作系统的ttyUSB<em>的动态分配原则，不同设备之间可能存在USB设备文件更新不及时的冲突。而且设备驱动和ROS的launch文件也经常需要更换ttyUSB</em>的设备编号配置。并且每一次需要更新设备读写权限，较为麻烦。
+在Linux中通过设置USB rules配置文件的方式来进行配置，通过识别设备的芯片编号绑定将设备绑定到固定的设备文件符中。
+主要流程如下：
+1.查询设备的硬件编号。
+2.根据硬件编号设置rules文件。
+3.重新启动udev serveice 更新配置文件。
+4.重新插拔设备，查看设备文件符。</p>
+<h2>查询设备硬件编号</h2>
+<p><kbd>udevadm info --attribute-walk --name=/dev/ttyUSB0</kbd></p>
+<p><img src="https://user-images.githubusercontent.com/108015790/224951536-5c4f7ae8-cb89-4957-b9d3-cfdd0f574ea2.png" alt="image" /></p>
+<p>其中<code>ATTRS{idProduct}</code>和<code>ATTRS{idVendor}</code>代表设备的硬件芯片信息。是操作系统内核识别设备的关键。
+使用<code>lsusb</code>命令直接查看所有设备的关键信息如下：
+<img src="https://user-images.githubusercontent.com/108015790/224951982-056a134d-4cd4-4ee4-933c-db756723d2a0.png" alt="image" /></p>
+<h2>添加<code>udev rules</code>规则文件<a href="https://wangpengcheng.github.io/2019/09/18/change_usb_rules_ubuntu/#%E6%B7%BB%E5%8A%A0udev-rules%E8%A7%84%E5%88%99%E6%96%87%E4%BB%B6"></a></h2>
+<p><em>参考链接：</em> <a href="https://linux.cn/article-6449-1.html?utm_source=weixin">如何在 Linux 中永久修改 USB 设备权限</a>;<a href="https://blog.csdn.net/jiangchao3392/article/details/76227180">ubuntu 16.04 中永久修改 USB 设备权限</a></p>
+<p>设备规则文件在Ubuntu中存放在<code>/etc/udev/rules.d/</code>文件夹下。可以在此文件夹中添加自定义的以<code>.rules</code>的文件。</p>
+<p>udev的规则的匹配关键键内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>关键键</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACTION</td>
+<td>事件 (uevent)的行为，例如：add( 添加设备 )、remove(删除设备 )。</td>
+</tr>
+<tr>
+<td>KERNEL</td>
+<td>在内核里看到的设备名字，比如sd*表示任意SCSI磁盘设备</td>
+</tr>
+<tr>
+<td>DEVPATH</td>
+<td>内核设备录进，比如/devices/*</td>
+</tr>
+<tr>
+<td>SUBSYSTEM</td>
+<td>子系统名字，例如：sda的子系统为 block。</td>
+</tr>
+<tr>
+<td>BUS</td>
+<td>总线的名字，比如IDE,USB</td>
+</tr>
+<tr>
+<td>DRIVER</td>
+<td>设备驱动的名字，比如ide-cdrom</td>
+</tr>
+<tr>
+<td>ID</td>
+<td>独立于内核名字的设备名字</td>
+</tr>
+<tr>
+<td>SYSFS{value}</td>
+<td>sysfs属性值，他可以表示任意</td>
+</tr>
+<tr>
+<td>ENV{ key}</td>
+<td>环境变量，可以表示任意</td>
+</tr>
+<tr>
+<td>PROGRAM</td>
+<td>可执行的外部程序，如果程序返回0值，该键则认为为真(true)</td>
+</tr>
+<tr>
+<td>RESULT</td>
+<td>上一个PROGRAM调用返回的标准输出。</td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>根据这个规则创建的设备文件的文件名。<strong>注意：仅仅第一行的NAME描述是有效的，后面的均忽略。如果你想使用使用两个以上的名字来访问一个设备的话，可以考虑SYMLINK键。</strong></td>
+</tr>
+<tr>
+<td>SYMLINK</td>
+<td>为 /dev/下的设备文件产生符号链接。由于 udev只能为某个设备产生一个设备文件，<strong>所以为了不覆盖系统默认的 udev规则所产生的文件，推荐使用符号链接。</strong></td>
+</tr>
+<tr>
+<td>OWNER</td>
+<td>设备文件的属组</td>
+</tr>
+<tr>
+<td>GROUP</td>
+<td>设备文件所在的组。</td>
+</tr>
+<tr>
+<td>MODE</td>
+<td>设备文件的权限，采用8进制</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>为设备而执行的程序列表</td>
+</tr>
+<tr>
+<td>LABEL</td>
+<td>在配置文件里为内部控制而采用的名字标签(下下面的GOTO服务)</td>
+</tr>
+<tr>
+<td>GOTO</td>
+<td>跳到匹配的规则（通过LABEL来标识），有点类似程序语言中的GOTO</td>
+</tr>
+<tr>
+<td>IMPORT{type}</td>
+<td>导入一个文件或者一个程序执行后而生成的规则集到当前文件</td>
+</tr>
+<tr>
+<td>WAIT_FOR_SYSFS</td>
+<td>等待一个特定的设备文件的创建。主要是用作时序和依赖问题。</td>
+</tr>
+<tr>
+<td>PTIONS</td>
+<td>特定的选项：</td>
+</tr>
+<tr>
+<td>last_rule</td>
+<td>对这类设备终端规则执行；</td>
+</tr>
+<tr>
+<td>ignore_device</td>
+<td>忽略当前规则；</td>
+</tr>
+<tr>
+<td>ignore_remove</td>
+<td>忽略接下来的并移走请求。</td>
+</tr>
+<tr>
+<td>all_partitions</td>
+<td>为所有的磁盘分区创建设备文件。</td>
+</tr>
+</tbody></table><p>在<code>/etc/udev/rules.d</code>文件夹下创建自定义<code>my_usb_rules.rules</code>文件内容如下</p>
+<pre><code># ultrasonic_radar usb rules
+KERNEL==&quot;ttyUSB*&quot;, SUBSYSTEMS==&quot;usb&quot;, ATTRS{idVendor}==&quot;10c4&quot;, ATTRS{idProduct}==&quot;ea60&quot;, GROUP=&quot;users&quot;, MODE=&quot;0666&quot;, ENV{ID_MM_DEVICE_IGNORE}=&quot;1&quot;, SYMLINK+=&quot;ultrasonic_radar&quot;
+# imu usb rules
+KERNEL==&quot;ttyUSB*&quot;, SUBSYSTEMS==&quot;usb&quot;, ATTRS{idVendor}==&quot;0403&quot;, ATTRS{idProduct}==&quot;6001&quot;, GROUP=&quot;users&quot;, MODE=&quot;0666&quot;, ENV{ID_MM_DEVICE_IGNORE}=&quot;1&quot;, SYMLINK+=&quot;imu&quot;
+</code></pre>
+<p>注意： 这里的<code>ATTRS{idVendor}</code>和<code>ATTRS{idProduct}</code>是查询到的对应的设备地芯片的硬件值。<code>SYMLINK+=</code>对应的是对设备<code>ttyUSB*</code>生成的软连接名称。<code>MODE</code>是对设备权限的更改。**一定要添加<code>KERNEL==&quot;ttyUSB*&quot;</code>**生成软连接。否则直接生成对名称的设备号。一般的linux驱动无法识别。</p>
+<h3>重启服务查看 对应设备[]</h3>
+<pre><code>ls -l /dev |grep ttyUSB
+
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/108015790/224952956-2d6d7ef5-7130-4f97-82ba-953cfefb113f.png" alt="image" /></p>
+<p>当添加或者删除udev的rules文件后，都需要使用如下命令，进行设备读取rules的更新</p>
+<pre><code>sudo service udev reload
+sudo service udev restart
+</code></pre>
+<p><strong>然后重新插拔USB设备，就可以按照新的规则执行了</strong>。</p>
+<p>使用<code>cutecom</code>查看串口通信结果</p>
+<p><strong>注意：这里是根据设备芯片类进行的配置具有唯一性，一个规则只能配置一种设备，两个设备是同种设备时不能由设备芯片进行识别区分</strong></p>
+<h2>KERNELS硬件端口号绑定USB串口名称(推荐使用)</h2>
+<p>通过以下命令查看ttyUSB0的KERNELS硬件端口号：
+<kbd>udevadm info --attribute-walk --name=/dev/ttyUSB0</kbd></p>
+<pre><code>udevadm info --attribute-walk --name=/dev/ttyUSB0
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/108015790/224954392-813a4037-b194-4104-9ea6-0b3dbd581fd9.png" alt="image" /></p>
+<p>在第三个looking at...的下方，就是这个USB 设备的KERNELS硬件端口号：KERNELS == &quot;3-1:1.0&quot;。</p>
+<p>在/etc/udev/rule.d 下产生相应的规则文件，将ttyUSB0命名为你喜欢的名字。</p>
+<p>首先，通过以下命令创建规则文件：</p>
+<pre><code>sudo vim /etc/udev/rules.d/usb.rules
+</code></pre>
+<p>在打开的文本框里输入以下代码，保存退出：</p>
+<pre><code>KERNELS==&quot;3-1:1.0&quot;, MODE:=&quot;0777&quot;, GROUP:=&quot;dialout&quot;, SYMLINK+=&quot;usb_rplidar&quot;
+</code></pre>
+<p>通过以上两步，就把ttyUSB0取别名为usb_rplidar，以后在程序里直接访问usb_rplidar，就可以与这个设备通信了。</p>
+<p>运行以下命令使修改立即生效：</p>
+<pre><code>sudo udevadm trigger
+</code></pre>
+<p>重复步骤，用同样的办法把剩下的USB设备重命名。</p>
+<p>把所有USB设备重命名后，运行以下命令查看USB设备名更改情况：</p>
+<pre><code>ls -l /dev |grep ttyUSB
+</code></pre>
+<p>至此，所有的USB设备都被唯一的绑定到自定义的名字上，再也不用担心设备号窜动了。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/13" rel="alternate"/><category term="Linux"/><published>2023-03-14T09:24:55+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/12</id><title>ROS的相关的笔记</title><updated>2023-03-14T09:25:25.297304+00:00</updated><content type="html"><![CDATA[<p>1、相关的<kbd>rostopic </kbd>的操作
 输出所有发布的话题：
 <kbd>rostopic list</kbd></p>
 <p>输出话题的类型：
@@ -8,12 +179,12 @@
 <kbd>rostopic pub -1 /myrobot/leg1423_Effort_controller/command std_msgs/Float64MultiArray &quot;data: [1.23,-1.23,-1.23,1.23]&quot;</kbd></p>
 <p>2、有用的网站参考链接
 <a href="https://github.com/facontidavide/PlotJuggler">PlotJuggler绘图</a></p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/12" rel="alternate"/><category term="ROS"/><published>2023-02-08T02:34:03+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/11</id><title>ros中如何define roll, pitch, and yaw，找到的比较权威的解释</title><updated>2023-02-08T02:34:34.331028+00:00</updated><content type="html"><![CDATA[<p>To define roll, pitch, and yaw in linear systems, we first need to establish the three primary axes: X, Y, and Z.</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/12" rel="alternate"/><category term="ROS"/><published>2023-02-08T02:34:03+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/11</id><title>ros中如何define roll, pitch, and yaw，找到的比较权威的解释</title><updated>2023-03-14T09:25:25.409547+00:00</updated><content type="html"><![CDATA[<p>To define roll, pitch, and yaw in linear systems, we first need to establish the three primary axes: X, Y, and Z.</p>
 <p><img src="https://user-images.githubusercontent.com/108015790/210919732-4d3906fb-cb5e-49c7-8fa4-9116e36cdca1.jpg" alt="Roll-Pitch-Yaw" /></p>
 <p>The two axes of the horizontal plane are typically defined as X and Y, with the X axis being in the direction of motion. The Y axis is orthogonal (perpendicular) to the direction of motion and is also in the horizontal plane. The Z axis is orthogonal to both the X and Y axes, but it is located in the vertical plane. (To find the positive direction of the Z axis, use the <a href="https://mathworld.wolfram.com/Right-HandRule.html">right-hand rule</a>: point the index finger in the direction of positive X, then curl it in the direction of positive Y, and the thumb will indicate positive Z.)</p>
 <hr />
 <p><em>In multi-axis systems, the direction of travel of the bottom axis is typically defined as the X axis. If the next axis above it is also horizontal, that axis is defined as Y, and the vertical axis (even if it is the second axis, directly on top of X), is defined as the Z axis.</em></p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/11" rel="alternate"/><category term="ROS"/><published>2023-01-06T02:49:06+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/10</id><title>从远程仓库获取最新代码合并到本地分支</title><updated>2023-02-08T02:34:34.505603+00:00</updated><content type="html"><![CDATA[<h2>1.git pull：获取最新代码到本地，并自动合并到当前分支</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/11" rel="alternate"/><category term="ROS"/><published>2023-01-06T02:49:06+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/10</id><title>从远程仓库获取最新代码合并到本地分支</title><updated>2023-03-14T09:25:25.673273+00:00</updated><content type="html"><![CDATA[<h2>1.git pull：获取最新代码到本地，并自动合并到当前分支</h2>
 <p>命令展示</p>
 <pre><code>//查询当前远程的版本
 $ git remote -v
@@ -56,13 +227,13 @@ $ git merge origin/master  [示例1：合并远端分支origin/master到当前�
 $ git merge origin/dev [示例2：合并远端分支origin/dev到当前分支]
 </code></pre>
 <p>备注：推荐这种方式</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/10" rel="alternate"/><category term="git"/><published>2022-12-15T01:33:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/9</id><title>Linux使用</title><updated>2023-02-08T02:34:34.627765+00:00</updated><content type="html"><![CDATA[<p>查看系统信息</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/10" rel="alternate"/><category term="git"/><published>2022-12-15T01:33:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/9</id><title>Linux使用</title><updated>2023-03-14T09:25:25.824037+00:00</updated><content type="html"><![CDATA[<p>查看系统信息</p>
 <pre><code>cat /etc/issue
 
 Ubuntu 20.04.2 LTS \n \l
 
 </code></pre>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/9" rel="alternate"/><category term="笔记"/><published>2022-12-14T01:17:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/8</id><title>在vim和tmux中开启真彩色</title><updated>2023-02-08T02:34:34.742807+00:00</updated><content type="html"><![CDATA[<p>在 vim 和 tmux 中开启真彩色，可以获得更好的视觉体验。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/9" rel="alternate"/><category term="笔记"/><published>2022-12-14T01:17:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/8</id><title>在vim和tmux中开启真彩色</title><updated>2023-03-14T09:25:25.966185+00:00</updated><content type="html"><![CDATA[<p>在 vim 和 tmux 中开启真彩色，可以获得更好的视觉体验。</p>
 <p>在 vimrc 中加入下面的设置：</p>
 <pre><code>if exists(&#x27;+termguicolors&#x27;)
   let &amp;t_8f = &quot;\&lt;Esc&gt;[38;2;%lu;%lu;%lum&quot;
@@ -108,7 +279,7 @@ __</p>
 <ol>
 <li><a href="https://gist.github.com/XVilka/8346728">https://gist.github.com/XVilka/8346728</a> <a href="https://www.littlezhang.com/2020/11/vim-tips%E5%9C%A8vim%E5%92%8Ctmux%E4%B8%AD%E5%BC%80%E5%90%AF%E7%9C%9F%E5%BD%A9%E8%89%B2/#fnref:1">↩︎</a></li>
 </ol>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/8" rel="alternate"/><published>2022-12-09T01:51:04+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/7</id><title>ubuntu20.04设置固定ip</title><updated>2023-02-08T02:34:34.896267+00:00</updated><content type="html"><![CDATA[<p>ubuntu 从 17.10 开始，已放弃在 /etc/network/interfaces 里固定 IP 的配置，interfaces 文件不复存在，即使配置也不会生效，而是改成 netplan 方式 ，配置写在 /etc/netplan/01-netcfg.yaml 或者类似名称的 yaml 文件里。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/8" rel="alternate"/><published>2022-12-09T01:51:04+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/7</id><title>ubuntu20.04设置固定ip</title><updated>2023-03-14T09:25:26.115312+00:00</updated><content type="html"><![CDATA[<p>ubuntu 从 17.10 开始，已放弃在 /etc/network/interfaces 里固定 IP 的配置，interfaces 文件不复存在，即使配置也不会生效，而是改成 netplan 方式 ，配置写在 /etc/netplan/01-netcfg.yaml 或者类似名称的 yaml 文件里。</p>
 <pre><code>sudo vim /etc/netplan/01-installer-config.yaml
 
 </code></pre>
@@ -135,7 +306,7 @@ networkctl status
 <p>再 ping 一下外网的 IP ，确认是否可以访问外网。</p>
 <pre><code>ping 114.114.114.114
 </code></pre>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/7" rel="alternate"/><category term="笔记"/><published>2022-09-29T09:25:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/6</id><title>terminator快捷键</title><updated>2023-02-08T02:34:35.142087+00:00</updated><content type="html"><![CDATA[<pre><code>//第一部份：关于在同一个标签内的操作
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/7" rel="alternate"/><category term="笔记"/><published>2022-09-29T09:25:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/6</id><title>terminator快捷键</title><updated>2023-03-14T09:25:26.236460+00:00</updated><content type="html"><![CDATA[<pre><code>//第一部份：关于在同一个标签内的操作
 Alt+Up                          //移动到上面的终端
 Alt+Down                        //移动到下面的终端
 Alt+Left                        //移动到左边的终端
@@ -177,7 +348,7 @@ Ctrl+Shift+I                    //打开一个窗口，新窗口与原来的窗�
 Super+i                         //打开一个新窗口，新窗口与原来的窗口使用不同的进程
 
 </code></pre>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/6" rel="alternate"/><category term="笔记"/><published>2022-09-28T09:01:59+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/5</id><title>git使用笔记</title><updated>2023-02-08T02:34:35.287358+00:00</updated><content type="html"><![CDATA[<h2>Git本次修改合并到上次提交</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/6" rel="alternate"/><category term="笔记"/><published>2022-09-28T09:01:59+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/5</id><title>git使用笔记</title><updated>2023-03-14T09:25:26.348339+00:00</updated><content type="html"><![CDATA[<h2>Git本次修改合并到上次提交</h2>
 <p>有时候为了减少提交日志，并且添加的内容是与上次的内容属于同一个提交内容的，为了好维护，会将本次的提交追加到上次的提交中。使用git 命令如下：</p>
 <pre><code>git add .                           (添加提交内容)
 git commit --amend        (追加到上次提交)#会通过core.editor指定的编辑器进行编辑
@@ -193,7 +364,7 @@ $ git config --global core.editor vim
 
 
 </code></pre>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/5" rel="alternate"/><category term="笔记"/><published>2022-09-08T08:53:39+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/4</id><title>记录cp命令的一次问题</title><updated>2023-02-08T02:34:35.413832+00:00</updated><content type="html"><![CDATA[<h3>问题描述</h3>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/5" rel="alternate"/><category term="笔记"/><published>2022-09-08T08:53:39+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/4</id><title>记录cp命令的一次问题</title><updated>2023-03-14T09:25:26.486152+00:00</updated><content type="html"><![CDATA[<h3>问题描述</h3>
 <p>原因是这样的，在执行脚本的过程中，出现了
 <img src="https://user-images.githubusercontent.com/108015790/184080966-55a8803f-3ee9-4d4f-a2da-1ba229705514.png" alt="Snipaste_2022-08-11_13-42-48" />
 所示的错误，定位到的错误是cp -rf  ******的原因，将-r参数去掉之后成功执行程序。</p>
@@ -201,7 +372,7 @@ $ git config --global core.editor vim
 <p>在cp的过程中，-r的参数是对目录进行的操作。查阅相关的资料解释如下所示：
 <img src="https://user-images.githubusercontent.com/108015790/184081545-d625a0fc-dd45-4f9c-a9d4-4833abf64b89.png" alt="image" />
 也就是说在对目录操作的情况下才需要加上-r，单纯的文件要简单的进行复制。</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/4" rel="alternate"/><category term="技术相关"/><published>2022-08-11T07:10:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/3</id><title>git commit 代码提交规范</title><updated>2023-02-08T02:34:35.562445+00:00</updated><content type="html"><![CDATA[<h5>格式：</h5>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/4" rel="alternate"/><category term="技术相关"/><published>2022-08-11T07:10:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/3</id><title>git commit 代码提交规范</title><updated>2023-03-14T09:25:26.594263+00:00</updated><content type="html"><![CDATA[<h5>格式：</h5>
 <pre><code>type(scope) : subject
 
 </code></pre>
@@ -240,12 +411,12 @@ commitizen 是一个撰写合格 Commit message 的工具，<br />
 <p>description 是对本次提交的简短描述。</p>
 <p>不超过50个字符。</p>
 <p>推荐以动词开头，如： 设置、修改、增加、删减、撤销等</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/3" rel="alternate"/><category term="笔记"/><published>2022-08-09T00:53:38+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/2</id><title>win10开启ping服务 </title><updated>2023-02-08T02:34:35.701915+00:00</updated><content type="html"><![CDATA[<p>在ping服务时候，我ping别的ip可以通，但是别人<strong>ping</strong>我不同，在同一网段下，网上查了一下，说可能是我的某个服务没有开通，很有道理。现在把这个服务开通过程写出来，方便以后避免这样的低级错误。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/3" rel="alternate"/><category term="笔记"/><published>2022-08-09T00:53:38+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/2</id><title>win10开启ping服务 </title><updated>2023-03-14T09:25:26.716007+00:00</updated><content type="html"><![CDATA[<p>在ping服务时候，我ping别的ip可以通，但是别人<strong>ping</strong>我不同，在同一网段下，网上查了一下，说可能是我的某个服务没有开通，很有道理。现在把这个服务开通过程写出来，方便以后避免这样的低级错误。</p>
 <p>控制面板--&gt;Windows防火墙--&gt;高级设置--&gt;入站规则--&gt;文件和打印机共享（回显请求ICMPv4-in），这个服务有两个，一个配置文件是“专用、公用”，一个是“域”，都启用就可以了。
 <img src="https://user-images.githubusercontent.com/108015790/183322355-9efdff37-67ff-436e-b3fa-057730224cda.png" alt="image" />
 如果是别人ping我能通，我ping别人不通，应该是他的入站规则，或者我的出站规则这个服务未启用。
 <img src="https://user-images.githubusercontent.com/108015790/183324191-61bba81e-e475-4e8e-bda7-ef890be0da47.png" alt="image" /></p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/2" rel="alternate"/><category term="bug"/><published>2022-08-08T10:00:14+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/1</id><title>ubuntu环境下的代理工具</title><updated>2023-02-08T02:34:35.838120+00:00</updated><content type="html"><![CDATA[<h2>1、安装</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/2" rel="alternate"/><category term="bug"/><published>2022-08-08T10:00:14+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/1</id><title>ubuntu环境下的代理工具</title><updated>2023-03-14T09:25:26.831172+00:00</updated><content type="html"><![CDATA[<h2>1、安装</h2>
 <p>安装命令：
 Debian / Ubuntu:</p>
 <pre><code>apt-get install python-pip
