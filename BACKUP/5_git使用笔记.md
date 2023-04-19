@@ -18,4 +18,19 @@ $ git config --global core.editor vim
 
 
 ```
+## 通过sshkey的方式拉取GitHub代码报错：
+```
+kex_exchange_identification: Connection closed by remote host fatal: Could not read from remote repository
+```
+通过查阅资料，这个报错其实跟梯子有关~但是不用梯子，速度感人！
+## 解决
+```
+# 编辑 ~/.ssh/config 文件
+Host github.com
+    HostName ssh.github.com
+    User git
+    Port 443
+# 检测
+ssh -T git@github.com
+```
 
