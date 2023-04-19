@@ -27,6 +27,7 @@ kex_exchange_identification: Connection closed by remote host fatal: Could not r
 ```
 # 编辑 ~/.ssh/config 文件
 Host github.com
+    CheckHostIP no  # Warning: Permanently added the ECDSA host key for IP address ' "to the list of known hosts.
     HostName ssh.github.com
     User git
     Port 443
