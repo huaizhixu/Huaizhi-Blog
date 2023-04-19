@@ -30,6 +30,10 @@ Host github.com
     HostName ssh.github.com
     User git
     Port 443
+   # 走 HTTP 代理
+   # ProxyCommand socat - PROXY:127.0.0.1:%h:%p,proxyport=8080
+   # 走 socks5 代理（如 Shadowsocks）
+   # ProxyCommand nc -v -x 127.0.0.1:7890 %h %p
 # 检测
 ssh -T git@github.com
 ```
