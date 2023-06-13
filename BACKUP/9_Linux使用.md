@@ -43,9 +43,10 @@ $ cp z.1 /usr/local/share/man/man1
 $ z -h
 $ man z
 ```
+### [终端的好用命令网站](https://icyleaf.github.io/better-cli-solution)
 
 
-制作Gif动图
+### 制作Gif动图
 在视频保存路径下，运行 <kbd>ffmpeg -i 视频.mp4 out.gif</kbd> 即可输出Gif动图。
 
 ## tmux使用
