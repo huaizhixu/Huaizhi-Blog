@@ -18,6 +18,12 @@ Ubuntu的apt-get代理设置
 sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8889/" update
 ```
 
+### 查看Processes sorted by RAM or CPU Usage
+```
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
+```
+
+
 ## 好用的命令
 <kbd>z</kbd> 命令 ( z - jump around ) 是一个开源的快速路径切换工具（类似工具还有 z.lua、autojump、fasd）。通过 Frecency 机制对日常访问的路径进行 Frecent 权重计算，z 命令会帮你切换到所有匹配正则关键字的路径中权重值最高的那条路径。
 ```

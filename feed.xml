@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/huaizhixu/Huaizhi-Blog</id><title>RSS feed of huaizhixu's Huaizhi-Blog</title><updated>2023-06-13T08:49:37.736742+00:00</updated><author><name>huaizhixu</name><email>yuquanxu0713@gmail.com</email></author><link href="https://github.com/huaizhixu/Huaizhi-Blog"/><link href="https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/13</id><title>ubuntu下绑定USB设备的串口名称</title><updated>2023-06-13T08:49:37.966977+00:00</updated><content type="html"><![CDATA[<p>在嵌入式开发和其它过程中，往往会出现USB设备的接入。但是对于多个USB设备接入时，由于操作系统的ttyUSB<em>的动态分配原则，不同设备之间可能存在USB设备文件更新不及时的冲突。而且设备驱动和ROS的launch文件也经常需要更换ttyUSB</em>的设备编号配置。并且每一次需要更新设备读写权限，较为麻烦。
+<feed xmlns="http://www.w3.org/2005/Atom"><id>https://github.com/huaizhixu/Huaizhi-Blog</id><title>RSS feed of huaizhixu's Huaizhi-Blog</title><updated>2023-07-17T00:47:54.332991+00:00</updated><author><name>huaizhixu</name><email>yuquanxu0713@gmail.com</email></author><link href="https://github.com/huaizhixu/Huaizhi-Blog"/><link href="https://raw.githubusercontent.com/huaizhixu/Huaizhi-Blog/master/feed.xml" rel="self"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/13</id><title>ubuntu下绑定USB设备的串口名称</title><updated>2023-07-17T00:47:54.621674+00:00</updated><content type="html"><![CDATA[<p>在嵌入式开发和其它过程中，往往会出现USB设备的接入。但是对于多个USB设备接入时，由于操作系统的ttyUSB<em>的动态分配原则，不同设备之间可能存在USB设备文件更新不及时的冲突。而且设备驱动和ROS的launch文件也经常需要更换ttyUSB</em>的设备编号配置。并且每一次需要更新设备读写权限，较为麻烦。
 在Linux中通过设置USB rules配置文件的方式来进行配置，通过识别设备的芯片编号绑定将设备绑定到固定的设备文件符中。
 主要流程如下：
 1.查询设备的硬件编号。
@@ -170,7 +170,7 @@ sudo service udev restart
 <pre><code>ls -l /dev |grep ttyUSB
 </code></pre>
 <p>至此，所有的USB设备都被唯一的绑定到自定义的名字上，再也不用担心设备号窜动了。</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/13" rel="alternate"/><category term="Linux"/><published>2023-03-14T09:24:55+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/12</id><title>ROS的相关的笔记</title><updated>2023-06-13T08:49:38.083466+00:00</updated><content type="html"><![CDATA[<p>1、相关的<kbd>rostopic </kbd>的操作
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/13" rel="alternate"/><category term="Linux"/><published>2023-03-14T09:24:55+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/12</id><title>ROS的相关的笔记</title><updated>2023-07-17T00:47:54.768806+00:00</updated><content type="html"><![CDATA[<p>1、相关的<kbd>rostopic </kbd>的操作
 输出所有发布的话题：
 <kbd>rostopic list</kbd></p>
 <p>输出话题的类型：
@@ -179,12 +179,12 @@ sudo service udev restart
 <kbd>rostopic pub -1 /myrobot/leg1423_Effort_controller/command std_msgs/Float64MultiArray &quot;data: [1.23,-1.23,-1.23,1.23]&quot;</kbd></p>
 <p>2、有用的网站参考链接
 <a href="https://github.com/facontidavide/PlotJuggler">PlotJuggler绘图</a></p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/12" rel="alternate"/><category term="ROS"/><published>2023-02-08T02:34:03+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/11</id><title>ros中如何define roll, pitch, and yaw，找到的比较权威的解释</title><updated>2023-06-13T08:49:38.196706+00:00</updated><content type="html"><![CDATA[<p>To define roll, pitch, and yaw in linear systems, we first need to establish the three primary axes: X, Y, and Z.</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/12" rel="alternate"/><category term="ROS"/><published>2023-02-08T02:34:03+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/11</id><title>ros中如何define roll, pitch, and yaw，找到的比较权威的解释</title><updated>2023-07-17T00:47:54.892217+00:00</updated><content type="html"><![CDATA[<p>To define roll, pitch, and yaw in linear systems, we first need to establish the three primary axes: X, Y, and Z.</p>
 <p><img src="https://user-images.githubusercontent.com/108015790/210919732-4d3906fb-cb5e-49c7-8fa4-9116e36cdca1.jpg" alt="Roll-Pitch-Yaw" /></p>
 <p>The two axes of the horizontal plane are typically defined as X and Y, with the X axis being in the direction of motion. The Y axis is orthogonal (perpendicular) to the direction of motion and is also in the horizontal plane. The Z axis is orthogonal to both the X and Y axes, but it is located in the vertical plane. (To find the positive direction of the Z axis, use the <a href="https://mathworld.wolfram.com/Right-HandRule.html">right-hand rule</a>: point the index finger in the direction of positive X, then curl it in the direction of positive Y, and the thumb will indicate positive Z.)</p>
 <hr />
 <p><em>In multi-axis systems, the direction of travel of the bottom axis is typically defined as the X axis. If the next axis above it is also horizontal, that axis is defined as Y, and the vertical axis (even if it is the second axis, directly on top of X), is defined as the Z axis.</em></p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/11" rel="alternate"/><category term="ROS"/><published>2023-01-06T02:49:06+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/10</id><title>从远程仓库获取最新代码合并到本地分支</title><updated>2023-06-13T08:49:38.292643+00:00</updated><content type="html"><![CDATA[<h2>1.git pull：获取最新代码到本地，并自动合并到当前分支</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/11" rel="alternate"/><category term="ROS"/><published>2023-01-06T02:49:06+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/10</id><title>从远程仓库获取最新代码合并到本地分支</title><updated>2023-07-17T00:47:55.028594+00:00</updated><content type="html"><![CDATA[<h2>1.git pull：获取最新代码到本地，并自动合并到当前分支</h2>
 <p>命令展示</p>
 <pre><code>//查询当前远程的版本
 $ git remote -v
@@ -227,7 +227,7 @@ $ git merge origin/master  [示例1：合并远端分支origin/master到当前�
 $ git merge origin/dev [示例2：合并远端分支origin/dev到当前分支]
 </code></pre>
 <p>备注：推荐这种方式</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/10" rel="alternate"/><category term="git"/><published>2022-12-15T01:33:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/9</id><title>Linux使用</title><updated>2023-06-13T08:49:38.411211+00:00</updated><content type="html"><![CDATA[<h2>Linux使用</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/10" rel="alternate"/><category term="git"/><published>2022-12-15T01:33:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/9</id><title>Linux使用</title><updated>2023-07-17T00:47:55.153384+00:00</updated><content type="html"><![CDATA[<h2>Linux使用</h2>
 <p>查看系统信息</p>
 <pre><code>cat /etc/issue
 
@@ -238,6 +238,9 @@ Ubuntu 20.04.2 LTS \n \l
 在命令行临时带入
 在命令行后面增加-o选项</p>
 <pre><code>sudo apt-get -o Acquire::http::proxy=&quot;http://127.0.0.1:8889/&quot; update
+</code></pre>
+<h3>查看Processes sorted by RAM or CPU Usage</h3>
+<pre><code>ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 </code></pre>
 <h2>好用的命令</h2>
 <p><kbd>z</kbd> 命令 ( z - jump around ) 是一个开源的快速路径切换工具（类似工具还有 z.lua、autojump、fasd）。通过 Frecency 机制对日常访问的路径进行 Frecent 权重计算，z 命令会帮你切换到所有匹配正则关键字的路径中权重值最高的那条路径。</p>
@@ -281,7 +284,7 @@ tmux save-buffer output.log
 <p>除了新开一个pane执行tmux命令，也可以在当前pane用快捷键<code>Alt-a</code>进入tmux命令行状态 即command-prompt，然后执行<code>capture-pane -S -5557 -E -642</code>.</p>
 <hr />
 <hr />
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/9" rel="alternate"/><category term="笔记"/><published>2022-12-14T01:17:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/8</id><title>在vim和tmux中开启真彩色</title><updated>2023-06-13T08:49:38.509172+00:00</updated><content type="html"><![CDATA[<p>在 vim 和 tmux 中开启真彩色，可以获得更好的视觉体验。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/9" rel="alternate"/><category term="笔记"/><published>2022-12-14T01:17:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/8</id><title>在vim和tmux中开启真彩色</title><updated>2023-07-17T00:47:55.282475+00:00</updated><content type="html"><![CDATA[<p>在 vim 和 tmux 中开启真彩色，可以获得更好的视觉体验。</p>
 <p>在 vimrc 中加入下面的设置：</p>
 <pre><code>if exists(&#x27;+termguicolors&#x27;)
   let &amp;t_8f = &quot;\&lt;Esc&gt;[38;2;%lu;%lu;%lum&quot;
@@ -327,7 +330,7 @@ __</p>
 <ol>
 <li><a href="https://gist.github.com/XVilka/8346728">https://gist.github.com/XVilka/8346728</a> <a href="https://www.littlezhang.com/2020/11/vim-tips%E5%9C%A8vim%E5%92%8Ctmux%E4%B8%AD%E5%BC%80%E5%90%AF%E7%9C%9F%E5%BD%A9%E8%89%B2/#fnref:1">↩︎</a></li>
 </ol>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/8" rel="alternate"/><published>2022-12-09T01:51:04+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/7</id><title>ubuntu20.04设置固定ip</title><updated>2023-06-13T08:49:38.629484+00:00</updated><content type="html"><![CDATA[<p>ubuntu 从 17.10 开始，已放弃在 /etc/network/interfaces 里固定 IP 的配置，interfaces 文件不复存在，即使配置也不会生效，而是改成 netplan 方式 ，配置写在 /etc/netplan/01-netcfg.yaml 或者类似名称的 yaml 文件里。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/8" rel="alternate"/><published>2022-12-09T01:51:04+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/7</id><title>ubuntu20.04设置固定ip</title><updated>2023-07-17T00:47:55.405995+00:00</updated><content type="html"><![CDATA[<p>ubuntu 从 17.10 开始，已放弃在 /etc/network/interfaces 里固定 IP 的配置，interfaces 文件不复存在，即使配置也不会生效，而是改成 netplan 方式 ，配置写在 /etc/netplan/01-netcfg.yaml 或者类似名称的 yaml 文件里。</p>
 <pre><code>sudo vim /etc/netplan/01-installer-config.yaml
 
 </code></pre>
@@ -354,7 +357,7 @@ networkctl status
 <p>再 ping 一下外网的 IP ，确认是否可以访问外网。</p>
 <pre><code>ping 114.114.114.114
 </code></pre>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/7" rel="alternate"/><category term="笔记"/><published>2022-09-29T09:25:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/6</id><title>terminator快捷键</title><updated>2023-06-13T08:49:38.734016+00:00</updated><content type="html"><![CDATA[<pre><code>//第一部份：关于在同一个标签内的操作
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/7" rel="alternate"/><category term="笔记"/><published>2022-09-29T09:25:48+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/6</id><title>terminator快捷键</title><updated>2023-07-17T00:47:55.545586+00:00</updated><content type="html"><![CDATA[<pre><code>//第一部份：关于在同一个标签内的操作
 Alt+Up                          //移动到上面的终端
 Alt+Down                        //移动到下面的终端
 Alt+Left                        //移动到左边的终端
@@ -396,7 +399,7 @@ Ctrl+Shift+I                    //打开一个窗口，新窗口与原来的窗�
 Super+i                         //打开一个新窗口，新窗口与原来的窗口使用不同的进程
 
 </code></pre>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/6" rel="alternate"/><category term="笔记"/><published>2022-09-28T09:01:59+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/5</id><title>git使用笔记</title><updated>2023-06-13T08:49:38.860002+00:00</updated><content type="html"><![CDATA[<h2>Git本次修改合并到上次提交</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/6" rel="alternate"/><category term="笔记"/><published>2022-09-28T09:01:59+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/5</id><title>git使用笔记</title><updated>2023-07-17T00:47:55.673489+00:00</updated><content type="html"><![CDATA[<h2>Git本次修改合并到上次提交</h2>
 <p>有时候为了减少提交日志，并且添加的内容是与上次的内容属于同一个提交内容的，为了好维护，会将本次的提交追加到上次的提交中。使用git 命令如下：</p>
 <pre><code>git add .                           (添加提交内容)
 git commit --amend        (追加到上次提交)#会通过core.editor指定的编辑器进行编辑
@@ -490,7 +493,7 @@ map &lt;Leader&gt;&lt;leader&gt;. &lt;Plug&gt;(easymotion-repeat)
 <p>这个插件专心做好跳转就好, 没必要把搜索的活给做了</p>
 </li>
 </ol>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/5" rel="alternate"/><category term="笔记"/><published>2022-09-08T08:53:39+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/4</id><title>记录cp命令的一次问题</title><updated>2023-06-13T08:49:38.968351+00:00</updated><content type="html"><![CDATA[<h3>问题描述</h3>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/5" rel="alternate"/><category term="笔记"/><published>2022-09-08T08:53:39+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/4</id><title>记录cp命令的一次问题</title><updated>2023-07-17T00:47:55.823910+00:00</updated><content type="html"><![CDATA[<h3>问题描述</h3>
 <p>原因是这样的，在执行脚本的过程中，出现了
 <img src="https://user-images.githubusercontent.com/108015790/184080966-55a8803f-3ee9-4d4f-a2da-1ba229705514.png" alt="Snipaste_2022-08-11_13-42-48" />
 所示的错误，定位到的错误是cp -rf  ******的原因，将-r参数去掉之后成功执行程序。</p>
@@ -498,7 +501,7 @@ map &lt;Leader&gt;&lt;leader&gt;. &lt;Plug&gt;(easymotion-repeat)
 <p>在cp的过程中，-r的参数是对目录进行的操作。查阅相关的资料解释如下所示：
 <img src="https://user-images.githubusercontent.com/108015790/184081545-d625a0fc-dd45-4f9c-a9d4-4833abf64b89.png" alt="image" />
 也就是说在对目录操作的情况下才需要加上-r，单纯的文件要简单的进行复制。</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/4" rel="alternate"/><category term="技术相关"/><published>2022-08-11T07:10:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/3</id><title>git commit 代码提交规范</title><updated>2023-06-13T08:49:39.065790+00:00</updated><content type="html"><![CDATA[<h5>格式：</h5>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/4" rel="alternate"/><category term="技术相关"/><published>2022-08-11T07:10:43+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/3</id><title>git commit 代码提交规范</title><updated>2023-07-17T00:47:55.947804+00:00</updated><content type="html"><![CDATA[<h5>格式：</h5>
 <pre><code>type(scope) : subject
 
 </code></pre>
@@ -537,12 +540,12 @@ commitizen 是一个撰写合格 Commit message 的工具，<br />
 <p>description 是对本次提交的简短描述。</p>
 <p>不超过50个字符。</p>
 <p>推荐以动词开头，如： 设置、修改、增加、删减、撤销等</p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/3" rel="alternate"/><category term="笔记"/><published>2022-08-09T00:53:38+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/2</id><title>win10开启ping服务 </title><updated>2023-06-13T08:49:39.181996+00:00</updated><content type="html"><![CDATA[<p>在ping服务时候，我ping别的ip可以通，但是别人<strong>ping</strong>我不同，在同一网段下，网上查了一下，说可能是我的某个服务没有开通，很有道理。现在把这个服务开通过程写出来，方便以后避免这样的低级错误。</p>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/3" rel="alternate"/><category term="笔记"/><published>2022-08-09T00:53:38+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/2</id><title>win10开启ping服务 </title><updated>2023-07-17T00:47:56.085586+00:00</updated><content type="html"><![CDATA[<p>在ping服务时候，我ping别的ip可以通，但是别人<strong>ping</strong>我不同，在同一网段下，网上查了一下，说可能是我的某个服务没有开通，很有道理。现在把这个服务开通过程写出来，方便以后避免这样的低级错误。</p>
 <p>控制面板--&gt;Windows防火墙--&gt;高级设置--&gt;入站规则--&gt;文件和打印机共享（回显请求ICMPv4-in），这个服务有两个，一个配置文件是“专用、公用”，一个是“域”，都启用就可以了。
 <img src="https://user-images.githubusercontent.com/108015790/183322355-9efdff37-67ff-436e-b3fa-057730224cda.png" alt="image" />
 如果是别人ping我能通，我ping别人不通，应该是他的入站规则，或者我的出站规则这个服务未启用。
 <img src="https://user-images.githubusercontent.com/108015790/183324191-61bba81e-e475-4e8e-bda7-ef890be0da47.png" alt="image" /></p>
-]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/2" rel="alternate"/><category term="bug"/><published>2022-08-08T10:00:14+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/1</id><title>ubuntu环境下的代理工具</title><updated>2023-06-13T08:49:39.282608+00:00</updated><content type="html"><![CDATA[<h2>1、安装</h2>
+]]></content><link href="https://github.com/huaizhixu/Huaizhi-Blog/issues/2" rel="alternate"/><category term="bug"/><published>2022-08-08T10:00:14+00:00</published></entry><entry><id>https://github.com/huaizhixu/Huaizhi-Blog/issues/1</id><title>ubuntu环境下的代理工具</title><updated>2023-07-17T00:47:56.211241+00:00</updated><content type="html"><![CDATA[<h2>1、安装</h2>
 <p>安装命令：
 Debian / Ubuntu:</p>
 <pre><code>apt-get install python-pip
